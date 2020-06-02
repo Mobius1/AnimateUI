@@ -265,19 +265,19 @@ end
 
 -- SLIDE OUT EFFECTS
 AnimateUI.SlideOutDown = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = 1.1 } }, 'linear', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = 1.1 } }, 'linear', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.SlideOutUp = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = -0.1 } }, 'linear', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = -0.1 } }, 'linear', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.SlideOutLeft = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = -0.1 } }, 'linear', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = -0.1 } }, 'linear', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.SlideOutRight = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = 1.1 } }, 'linear', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = 1.1 } }, 'linear', Interval, Timeout, nil, cb)
 end
 
 
@@ -311,23 +311,23 @@ end
 
 -- BOUNCE OUT
 AnimateUI.BounceOut = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { Size = { Start = Config.Size, End = 0 } }, 'outBounce', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { Size = { Start = Config.Size, End = 0 } }, 'outBounce', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.BounceOutUp = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = -0.1 } }, 'outBounce', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = -0.1 } }, 'outBounce', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.BounceOutDown = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = 1.1 } }, 'outBounce', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = 1.1 } }, 'outBounce', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.BounceOutLeft = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = -0.1 } }, 'outBounce', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = -0.1 } }, 'outBounce', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.BounceOutRight = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = 1.1 } }, 'outBounce', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = 1.1 } }, 'outBounce', Interval, Timeout, nil, cb)
 end
 
 
@@ -376,23 +376,23 @@ end
 
 -- ELASTIC OUT
 AnimateUI.ElasticOut = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, {Size = { Start = Config.Size, End = 0 } }, 'outElastic', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, {Size = { Start = Config.Size, End = 0 } }, 'outElastic', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.ElasticOutUp = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = -0.1 } }, 'outElastic', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = -0.1 } }, 'outElastic', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.ElasticOutDown = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = 1.1 } }, 'outElastic', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionY = { Start = Config.PositionY, End = 1.1 } }, 'outElastic', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.ElasticOutLeft = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = -0.1 } }, 'outElastic', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = -0.1 } }, 'outElastic', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.ElasticOutRight = function(Message, Interval, Timeout, cb)
-    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = 1.1 } }, 'outElastic', Interval, Timeout, cb)
+    return AnimateUI.Run(Message, { PositionX = { Start = Config.PositionX, End = 1.1 } }, 'outElastic', Interval, Timeout, nil, cb)
 end
 
 

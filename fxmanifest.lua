@@ -13,7 +13,8 @@ client_scripts {
     'config.lua',
     'client/easing.lua',
     'client/effects.lua',
-    'client/main.lua'
+    'client/demo.lua', 
+    'client/main.lua',
 }
 
 exports {
