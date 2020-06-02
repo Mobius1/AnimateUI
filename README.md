@@ -31,16 +31,16 @@ exports.AnimateUI:showMessage(Text, EntryEffect, Duration, Timeout, ExitEffect, 
 The `Text` param is the text you want to show to the player.
 
 ### `EntryEffect` (Required)
-The `EntryEffect` param is effect used to show the text to the player.
+The `EntryEffect` param is the effect used to show the text to the player.
 
 ### `Duration` (Required)
-The `Duration` param determines how long the entry effect will be player played.
+The `Duration` param determines how long the entry effect will be played.
 
 ### `Timeout` (Required)
 The `Timeout` param determines how long the text is displayed before being removed.
 
 ### `ExitEffect` (Optional)
-The `ExitEffect` param can either be a string denoting the effect name to be used or a table. If the effect name is used then the duration of the exit effect will be the same as the entry duration (`Interval`). You can define the duration of the exit animation by using a table:
+The `ExitEffect` param can either be a string denoting the effect name to be used or a table. If the effect name is used then the duration of the exit effect will be the same as the entry duration (`Duration`). You can define the duration of the exit animation by using a table:
 ```lua
 exports.AnimateUI:showMessage("My Message", "FadeIn", 1000, 3000, "FadeOut")
 
@@ -63,6 +63,79 @@ exports.AnimateUI:showMessage("My Message", "FadeIn", 1000, 3000, "FadeOut", fun
 end)
 ```
 
+## Available Effects
+
+Entry effects can only be used to show the text and exit effects can only be used to hide the text.
+
+### Entry Effects
+#### Fade
+* `FadeIn`
+* `FadeInUp`
+* `FadeInDown`
+* `FadeInLeft`
+* `FadeInRight`
+
+#### Slide
+* `SlideInUp`
+* `SlideInDown`
+* `SlideInLeft`
+* `SlideInRight`
+
+#### Bounce
+* `BounceIn`
+* `BounceInUp`
+* `BounceInDown`
+* `BounceInLeft`
+* `BounceInRight`
+
+#### Elastic
+* `ElasticIn`
+* `ElasticInUp`
+* `ElasticInDown`
+* `ElasticInLeft`
+* `ElasticInRight`
+
+#### Zoom
+* `ZoomIn`
+
+#### Misc
+* `TypewriterIn`
+
+
+### Exit Effects
+#### Fade
+* `FadeOut`
+* `FadeOutUp`
+* `FadeOutDown`
+* `FadeOutLeft`
+* `FadeOutRight`
+
+#### Slide
+* `SlideOutUp`
+* `SlideOutDown`
+* `SlideOutLeft`
+* `SlideOutRight`
+
+#### Bounce
+* `BounceOut`
+* `BounceOutUp`
+* `BounceOutDown`
+* `BounceOutLeft`
+* `BounceOutRight`
+
+#### Elastic
+* `ElasticOut`
+* `ElasticOutUp`
+* `ElasticOutDown`
+* `ElasticOutLeft`
+* `ElasticOutRight`
+
+#### Zoom
+* `ZoomOut`
+
+#### Misc
+* `TypewriterOut`
+
 ## Removing Text
 If you require the text to be removed at anytime, you can utilise the `exports.AnimateUI:removeMessage` function. To remove the message, you must store the ID beforehand:
 
@@ -78,7 +151,7 @@ Removing the message cancels all animations, removes the text from the screen an
 AnimateUI comes with commands to demonstrate the included effects.
 
 ```lua
-/AnimateUIDemo          -- plays all included effects
+/AnimateUIDemo          -- cycles through all included effects
 /AnimateUIDemo type     -- plays only the selected effect type
 ```
 
