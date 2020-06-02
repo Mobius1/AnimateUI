@@ -151,18 +151,18 @@ Removing the message cancels all animations, removes the text from the screen an
 AnimateUI comes with commands to demonstrate the included effects.
 
 ```lua
-/AnimateUIDemo          -- cycles through all included effects
-/AnimateUIDemo type     -- plays only the selected effect type
+/AnimateUIDemo type
 ```
 
 
 Available types:
-* fade
-* slide
-* bounce
-* elastic
-* zoom
-* typewriter
+* `all` - cycles thorugh all available effects
+* `fade` - cycles thorugh all fade effects
+* `slide` - cycles thorugh all slide effects
+* `bounce` - cycles thorugh all bounce effects
+* `elastic` - cycles thorugh all elastic effects
+* `zoom` - cycles thorugh all zoom effects
+* `typewriter` - cycles thorugh all typewriter effects
 
 ## Videos
 

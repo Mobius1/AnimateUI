@@ -11,7 +11,7 @@ function removeMessage(ID)
 end
 
 TriggerEvent('chat:addSuggestion', '/AnimateUIDemo', 'help text', {
-    { name="type", help="fade | zoom | slide | bounce | elastic | typewriter" }
+    { name="type", help="all | fade | zoom | slide | bounce | elastic | typewriter" }
 }) 
 
 RegisterCommand('AnimateUIDemo', function(source, args)
@@ -30,9 +30,9 @@ RegisterCommand('AnimateUIDemo', function(source, args)
                 InitZoomAnimations()
             elseif args[1] == 'typewriter' then
                 InitTypewriterAnimations()
+            elseif args[1] == 'all' then
+                InitDemo()
             end
-        else
-            InitDemo()
         end  
     end)
 end)

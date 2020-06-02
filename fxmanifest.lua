@@ -6,7 +6,7 @@ description 'ESX Message'
 
 author 'Karl Saunders'
 
-version '0.0.3'
+version '0.0.4'
 
 
 client_scripts {

@@ -1,5 +1,5 @@
 function InitZoomAnimations(loop)
-    AnimateUI.ZoomIn("ZoomIn / ZoomOut", 1000, 1500, "ZoomOut", function()
+    AnimateUI.ZoomIn("ZoomIn / ZoomOut", 250, 1500, "ZoomOut", function()
         if loop then
             InitSlideAnimations(loop)
         end
@@ -7,11 +7,11 @@ function InitZoomAnimations(loop)
 end
 
 function InitFadeAnimations(loop)
-    AnimateUI.FadeIn("FadeIn / FadeOut", 1000, 1500, "FadeOut", function()
-        AnimateUI.FadeInDown("FadeInDown / FadeOutDown", 1000, 1500, "FadeOutDown", function()
-            AnimateUI.FadeInUp("FadeInUp / FadeOutUp", 1000, 1500, "FadeOutUp", function()
-                AnimateUI.FadeInLeft("FadeInLeft / FadeOutLeft", 1000, 1500, "FadeOutLeft", function()
-                    AnimateUI.FadeInRight("FadeInRight / FadeOutRight", 1000, 1500, "FadeOutRight", function()
+    AnimateUI.FadeIn("FadeIn / FadeOut", 500, 1500, "FadeOut", function()
+        AnimateUI.FadeInDown("FadeInDown / FadeOutDown", 500, 1500, "FadeOutDown", function()
+            AnimateUI.FadeInUp("FadeInUp / FadeOutUp", 500, 1500, "FadeOutUp", function()
+                AnimateUI.FadeInLeft("FadeInLeft / FadeOutLeft", 500, 1500, "FadeOutLeft", function()
+                    AnimateUI.FadeInRight("FadeInRight / FadeOutRight", 500, 1500, "FadeOutRight", function()
                         if loop then
                             InitBounceAnimations(loop)
                         end
@@ -23,10 +23,10 @@ function InitFadeAnimations(loop)
 end
 
 function InitSlideAnimations(loop)
-    AnimateUI.SlideInDown("SlideInDown / SlideOutDown", 1000, 1500, "SlideOutDown", function()
-        AnimateUI.SlideInUp("SlideInUp / SlideOutUp", 1000, 1500, "SlideOutUp", function()
-            AnimateUI.SlideInLeft("SlideInLeft / SlideOutLeft", 1000, 1500, "SlideOutLeft", function()
-                AnimateUI.SlideInRight("SlideInRight / SlideOutRight", 1000, 1500, "SlideOutRight", function()
+    AnimateUI.SlideInDown("SlideInDown / SlideOutDown", 500, 1500, "SlideOutDown", function()
+        AnimateUI.SlideInUp("SlideInUp / SlideOutUp", 500, 1500, "SlideOutUp", function()
+            AnimateUI.SlideInLeft("SlideInLeft / SlideOutLeft", 500, 1500, "SlideOutLeft", function()
+                AnimateUI.SlideInRight("SlideInRight / SlideOutRight", 500, 1500, "SlideOutRight", function()
                     if loop then
                         InitFadeAnimations(loop)
                     end
