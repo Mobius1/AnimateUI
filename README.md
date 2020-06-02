@@ -22,6 +22,58 @@ Animated UI Messages for FiveM
 * Edit `config.lua` to your liking
 * Start your server and rejoice!
 
+## Usage
+The text can be shown by using the `exports.AnimateUI:showMessage` function.
+```lua
+exports.AnimateUI:showMessage(Text, EntryEffect, Duration, Timeout, ExitEffect, Callback)
+```
+### `Text` (Required)
+The `Text` param is the text you want to show to the player.
+
+### `EntryEffect` (Required)
+The `EntryEffect` param is effect used to show the text to the player.
+
+### `Duration` (Required)
+The `Duration` param determines how long the entry effect will be player played.
+
+### `Timeout` (Required)
+The `Timeout` param determines how long the text is displayed before being removed.
+
+### `ExitEffect` (Optional)
+The `ExitEffect` param can either be a string denoting the effect name to be used or a table. If the effect name is used then the duration of the exit effect will be the same as the entry duration (`Interval`). You can define the duration of the exit animation by using a table:
+```lua
+exports.AnimateUI:showMessage("My Message", "FadeIn", 1000, 3000, "FadeOut")
+
+-- or
+
+exports.AnimateUI:showMessage("My Message", "FadeIn", 1000, 3000, 
+{
+    Effect = 'FadeOut',   -- the exit effect to use
+    Duration = 1000       -- the duration the exit effect
+})
+```
+
+The `ExitEffect` param is optional and if left empty, the text will just disappear when done.
+
+### `Callback` (Optional)
+The `Callback` param is optional, but when used will fire when the text has been hidden:
+```lua
+exports.AnimateUI:showMessage("My Message", "FadeIn", 1000, 3000, "FadeOut", function()
+    -- Do something when the text has been hidden
+end)
+```
+
+## Removing Text
+If you require the text to be removed at anytime, you can utilise the `exports.AnimateUI:removeMessage` function. To remove the message, you must store the ID beforehand:
+
+```lua
+local ID = exports.AnimateUI:showMessage("My Message", "FadeIn", 1000, 3000)
+
+exports.AnimateUI:removeMessage(ID)
+```
+
+Removing the message cancels all animations, removes the text from the screen and kills any threads used.
+
 ## Demo Options
 AnimateUI comes with commands to demonstrate the included effects.
 

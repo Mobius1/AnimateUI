@@ -57,10 +57,10 @@ AnimateUI.Run = function(Message, Element, Func, Interval, Timeout, Exit, Callba
                 -- Exit animation
                 if Exit ~= nil then
                     if type(Exit) == 'table' then
-                        if Exit.Interval == nil then
-                            Exit.Interval = Interval
+                        if Exit.Duration == nil then
+                            Exit.Duration = Interval
                         end
-                        AnimateUI[Exit.Effect](Message, Exit.Interval, 0, Callback)
+                        AnimateUI[Exit.Effect](Message, Exit.Duration, 0, Callback)
                     elseif type(Exit) == 'string' then
                         AnimateUI[Exit](Message, Interval, 0, Callback)
                     end
@@ -427,10 +427,10 @@ AnimateUI.TypewriterIn = function(Message, Interval, Timeout, Exit, Callback)
                     -- Exit animation
                     if Exit ~= nil then
                         if type(Exit) == 'table' then
-                            if Exit.Interval == nil then
-                                Exit.Interval = Interval
+                            if Exit.Duration == nil then
+                                Exit.Duration = Interval
                             end
-                            AnimateUI[Exit.Effect](Message, Exit.Interval, 0, Callback)
+                            AnimateUI[Exit.Effect](Message, Exit.Duration, 0, Callback)
                         elseif type(Exit) == 'string' then
                             AnimateUI[Exit](Message, Interval, 0, Callback)
                         end
