@@ -1,13 +1,16 @@
-Threads = {}
+local Threads = {}
+local Offset = 1
+
 AnimateUI = {}
 
 
 function RandomID(length)
     local res = ""
-    math.randomseed(GetGameTimer())
+    math.randomseed(GetGameTimer() + Offset)
     for i = 1, length do
         res = res .. string.char(math.random(97, 122))
     end
+    Offset = Offset + 1
     return res
 end
 
@@ -66,6 +69,8 @@ AnimateUI.Run = function(Message, Settings, Element, Func, Interval, Timeout, Ex
         ID = ID
     })
 
+    for k,v in pairs(Threads) do print(k,v.ID) end
+
     local Thread = Threads[Index]
     
     Citizen.CreateThread(function()
@@ -105,7 +110,7 @@ AnimateUI.Run = function(Message, Settings, Element, Func, Interval, Timeout, Ex
                     Threads[Index] = nil
                     
                     if Callback ~= nil then
-                        Callback()
+                        Callback(ID)
                     end
                 end                     
             end
