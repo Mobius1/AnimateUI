@@ -2,6 +2,9 @@
 Animated UI Messages for FiveM
 
 ## Demo
+
+[Demo Video](https://streamable.com/783wli)
+
 <details>
 <summary>Fade Effects</summary>
 
@@ -231,7 +234,7 @@ Available types:
 
 ## Videos
 
-* Coming soon...
+* [Multiple Messages / Effects](https://streamable.com/783wli)
 
 ## Contributing
 Pull requests welcome.
