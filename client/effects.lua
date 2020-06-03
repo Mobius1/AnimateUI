@@ -59,6 +59,9 @@ AnimateUI.Run = function(Message, Settings, Element, Func, Interval, Timeout, Ex
             else
                 Value.End = { Key = Type, Value = Copy[Type] }
             end
+
+            -- Prevent message from showing at start
+            Copy[Type] = Value.Start.Value
         end
     end
 
@@ -68,8 +71,6 @@ AnimateUI.Run = function(Message, Settings, Element, Func, Interval, Timeout, Ex
         Tick = true,
         ID = ID
     })
-
-    for k,v in pairs(Threads) do print(k,v.ID) end
 
     local Thread = Threads[Index]
     
