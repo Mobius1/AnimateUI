@@ -46,23 +46,21 @@ AnimateUI.Run = function(Message, Settings, Element, Func, Interval, Timeout, Ex
 
     local Tick = true
 
-    if type(Element) == 'table' then
-        for Type, Value in pairs(Element) do
-            if Value.Start ~= nil then
-                Value.Start = { Key = Type, Value = Value.Start }
-            else
-                Value.Start = { Key = Type, Value = Copy[Type] }
-            end
-
-            if Value.End ~= nil then
-                Value.End = { Key = Type, Value = Value.End }
-            else
-                Value.End = { Key = Type, Value = Copy[Type] }
-            end
-
-            -- Prevent message from showing at start
-            Copy[Type] = Value.Start.Value
+    for Type, Value in pairs(Element) do
+        if Value.Start ~= nil then
+            Value.Start = { Key = Type, Value = Value.Start }
+        else
+            Value.Start = { Key = Type, Value = Copy[Type] }
         end
+
+        if Value.End ~= nil then
+            Value.End = { Key = Type, Value = Value.End }
+        else
+            Value.End = { Key = Type, Value = Copy[Type] }
+        end
+
+        -- Prevent message from showing at start
+        Copy[Type] = Value.Start.Value
     end
 
     local Index = #Threads + 1
