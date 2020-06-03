@@ -1,6 +1,6 @@
 function showMessage(Message, Type, Interval, Timeout, Exit, Callback)
     if AnimateUI[Type] then
-        return AnimateUI[Type](Message, Interval, Timeout, Exit, Callback)
+        return AnimateUI[Type](Message, nil, Interval, Timeout, Exit, Callback)
     end
 
     return false
