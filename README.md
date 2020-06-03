@@ -1,22 +1,65 @@
 # AnimateUI
 Animated UI Messages for FiveM
 
+## Demo
+<details>
+<summary>Fade Effects</summary>
+
+![Demo Image 1](https://imgur.com/0IedTL1.jpeg)
+![Demo Image 2](https://imgur.com/Z8OVber.jpeg)
+![Demo Image 3](https://imgur.com/SpPmNjP.jpeg)
+![Demo Image 4](https://imgur.com/vJVjfyw.jpeg)
+![Demo Image 5](https://imgur.com/M4NS15M.jpeg)
+
+</details>
+
+<details>
+<summary>Bounce Effects</summary>
+
+![Demo Image 1](https://imgur.com/0VZTxSh.jpeg)
+![Demo Image 2](https://imgur.com/dxXyLIE.jpeg)
+![Demo Image 3](https://imgur.com/cgclBXz.jpeg)
+![Demo Image 4](https://imgur.com/6qCoLKn.jpeg)
+![Demo Image 5](https://imgur.com/LY1kfNh.jpeg)
+
+</details>
+
+<details>
+<summary>Slide Effects</summary>
+
+![Demo Image 1](https://imgur.com/BZhvjKx.jpeg)
+![Demo Image 2](https://imgur.com/xvnc5i5.jpeg)
+![Demo Image 3](https://imgur.com/rZB6Fvr.jpeg)
+![Demo Image 4](https://imgur.com/hAfL3Xv.jpeg)
+
+</details>
+
+<details>
+<summary>Elastic Effects</summary>
+
+![Demo Image 1](https://imgur.com/MfDdhrB.jpeg)
+![Demo Image 2](https://imgur.com/wY1A8U7.jpeg)
+![Demo Image 3](https://imgur.com/UDETXdr.jpeg)
+![Demo Image 4](https://imgur.com/Jfto8xv.jpeg)
+![Demo Image 5](https://imgur.com/dYChYaQ.jpeg)
+
+</details>
+
+<details>
+<summary>Misc Effects</summary>
+
+![Demo Image 1](https://imgur.com/bsr0ndI.jpeg)
+![Demo Image 2](https://imgur.com/1PB9jvx.jpeg)
+
+</details>
+
 ## Features
+* Uses native UI
 * Smooth entry and exit animations
 * Choose from a variety of effects (slide, bounce, fade, typewriter, etc)
 * Optional callbacks can be set
 * Fine control of position, size, color, etc
-* Uses native UI so no need for NUI
 * Performant
-
-## Demo
-<details>
-<summary>Fade</summary>
-
-![Demo Image 1](https://imgur.com/0IedTL1.jpeg)
-
-</details>
-
 
 ## Requirements
 
