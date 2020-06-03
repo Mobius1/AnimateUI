@@ -9,6 +9,15 @@ Animated UI Messages for FiveM
 * Uses native UI so no need for NUI
 * Performant
 
+## Demo
+<details>
+<summary>Fade</summary>
+
+![Demo Image 1](https://imgur.com/0IedTL1.jpeg)
+
+</details>
+
+
 ## Requirements
 
 * None
