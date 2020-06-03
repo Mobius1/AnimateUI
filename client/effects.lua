@@ -11,10 +11,20 @@ function RandomID(length)
     return res
 end
 
-function GetSettings(Copy, Settings)
+function MergeConfig(Copy, Settings)
     for k,v in pairs(Settings) do Copy[k] = v end
-
     return Copy
+end
+
+function Override(Settings, Key)
+    local Element = Config[Key]
+    if Settings ~= nil then
+        if Settings[Key] ~= nil then
+            Element = Settings[Key]
+        end
+    end
+    
+    return Element
 end
 
 -- MAIN RENDER THREADS
@@ -28,11 +38,10 @@ AnimateUI.Run = function(Message, Settings, Element, Func, Interval, Timeout, Ex
     }
 
     if Settings ~= nil then
-        Copy = GetSettings(Copy, Settings)
+        Copy = MergeConfig(Copy, Settings)
     end
 
     local Tick = true
-    local StartTime = GetGameTimer()
 
     if type(Element) == 'table' then
         for Type, Value in pairs(Element) do
@@ -58,19 +67,23 @@ AnimateUI.Run = function(Message, Settings, Element, Func, Interval, Timeout, Ex
     })
 
     local Thread = Threads[Index]
-
-    for k,v in pairs(Element) do print(k,v) end
-
     
     Citizen.CreateThread(function()
+        local StartTime = GetGameTimer()
         while Thread.Tick do
             local CurrentTime = GetGameTimer() - StartTime
-            
-            if CurrentTime <= Interval then
+
+            if CurrentTime < Interval then
                 for Type, Value in pairs(Element) do
                     Copy[Type] = Easing[Func](CurrentTime, Value.Start.Value, Value.End.Value - Value.Start.Value, Interval)
                 end
             else
+                for Type, Value in pairs(Element) do
+                    if Copy[Type] > Value.End.Value or Copy[Type] < Value.End.Value then
+                        Copy[Type] = Value.End.Value
+                    end
+                end
+
                 Citizen.Wait(Timeout)
 
                 -- Exit animation
@@ -83,7 +96,7 @@ AnimateUI.Run = function(Message, Settings, Element, Func, Interval, Timeout, Ex
                     elseif type(Exit) == 'string' then
                         AnimateUI[Exit](Message, Settings, Interval, 0, Callback)
                     end
-                    Citizen.Wait(10)
+                    Citizen.Wait(20)
                     Thread.Tick = false
                     Threads[Index] = nil
                     break
@@ -150,19 +163,9 @@ AnimateUI.FadeIn = function(Message, Settings, Interval, Timeout, Exit, cb)
 end
 
 AnimateUI.FadeInDown = function(Message, Settings, Interval, Timeout, Exit, cb)
-    local PositionY = Config.PositionY
-    if Settings ~= nil then
-        if Settings.PositionY ~= nil then
-            PositionY = Settings.PositionY
-        end
-    end  
+    local PositionY = Override(Settings, "PositionY")
+    local Opacity   = Override(Settings, "Opacity")
 
-    local Opacity = Config.Opacity
-    if Settings ~= nil then
-        if Settings.Opacity ~= nil then
-            Opacity = Settings.Opacity
-        end
-    end     
     return AnimateUI.Run(Message, Settings, {
         PositionY = {
             Start = PositionY - 0.10,
@@ -176,19 +179,9 @@ AnimateUI.FadeInDown = function(Message, Settings, Interval, Timeout, Exit, cb)
 end
 
 AnimateUI.FadeInUp = function(Message, Settings, Interval, Timeout, Exit, cb)
-    local PositionY = Config.PositionY
-    if Settings ~= nil then
-        if Settings.PositionY ~= nil then
-            PositionY = Settings.PositionY
-        end
-    end  
+    local PositionY = Override(Settings, "PositionY")
+    local Opacity   = Override(Settings, "Opacity")
 
-    local Opacity = Config.Opacity
-    if Settings ~= nil then
-        if Settings.Opacity ~= nil then
-            Opacity = Settings.Opacity
-        end
-    end     
     return AnimateUI.Run(Message, Settings, {
         PositionY = {
             Start = PositionY + 0.10,
@@ -202,19 +195,9 @@ AnimateUI.FadeInUp = function(Message, Settings, Interval, Timeout, Exit, cb)
 end
 
 AnimateUI.FadeInLeft = function(Message, Settings, Interval, Timeout, Exit, cb)
-    local PositionX = Config.PositionX
-    if Settings ~= nil then
-        if Settings.PositionX ~= nil then
-            PositionX = Settings.PositionX
-        end
-    end  
+    local PositionX = Override(Settings, "PositionX")
+    local Opacity   = Override(Settings, "Opacity")
 
-    local Opacity = Config.Opacity
-    if Settings ~= nil then
-        if Settings.Opacity ~= nil then
-            Opacity = Settings.Opacity
-        end
-    end     
     return AnimateUI.Run(Message, Settings, {
         PositionX = {
             Start = PositionX - 0.10,
@@ -228,19 +211,9 @@ AnimateUI.FadeInLeft = function(Message, Settings, Interval, Timeout, Exit, cb)
 end
 
 AnimateUI.FadeInRight = function(Message, Settings, Interval, Timeout, Exit, cb)
-    local PositionX = Config.PositionX
-    if Settings ~= nil then
-        if Settings.PositionX ~= nil then
-            PositionX = Settings.PositionX
-        end
-    end  
+    local PositionX = Override(Settings, "PositionX")
+    local Opacity   = Override(Settings, "Opacity")
 
-    local Opacity = Config.Opacity
-    if Settings ~= nil then
-        if Settings.Opacity ~= nil then
-            Opacity = Settings.Opacity
-        end
-    end 
     return AnimateUI.Run(Message, Settings, {
         PositionX = {
             Start = PositionX + 0.10,
@@ -256,29 +229,14 @@ end
 
 -- FADE OUT
 AnimateUI.FadeOut = function(Message, Settings, Interval, Timeout, cb)
-    local Opacity = Config.Opacity
-    if Settings ~= nil then
-        if Settings.Opacity ~= nil then
-            Opacity = Settings.Opacity
-        end
-    end         
+    local Opacity   = Override(Settings, "Opacity")   
     return AnimateUI.Run(Message, Settings, { Opacity = { Start = Opacity, End = 0 } }, 'linear', Interval, Timeout, nil, cb)  
 end
 
 AnimateUI.FadeOutUp = function(Message, Settings, Interval, Timeout, cb)
-    local PositionY = Config.PositionY
-    if Settings ~= nil then
-        if Settings.PositionY ~= nil then
-            PositionY = Settings.PositionY
-        end
-    end  
+    local PositionY = Override(Settings, "PositionY")
+    local Opacity   = Override(Settings, "Opacity")
 
-    local Opacity = Config.Opacity
-    if Settings ~= nil then
-        if Settings.Opacity ~= nil then
-            Opacity = Settings.Opacity
-        end
-    end         
     return AnimateUI.Run(Message, Settings, {
         PositionY = {
             Start = PositionY,
@@ -292,19 +250,9 @@ AnimateUI.FadeOutUp = function(Message, Settings, Interval, Timeout, cb)
 end
 
 AnimateUI.FadeOutDown = function(Message, Settings, Interval, Timeout, cb)
-    local PositionY = Config.PositionY
-    if Settings ~= nil then
-        if Settings.PositionY ~= nil then
-            PositionY = Settings.PositionY
-        end
-    end  
+    local PositionY = Override(Settings, "PositionY")
+    local Opacity   = Override(Settings, "Opacity")
 
-    local Opacity = Config.Opacity
-    if Settings ~= nil then
-        if Settings.Opacity ~= nil then
-            Opacity = Settings.Opacity
-        end
-    end         
     return AnimateUI.Run(Message, Settings, {
         PositionY = {
             Start = PositionY,
@@ -318,19 +266,9 @@ AnimateUI.FadeOutDown = function(Message, Settings, Interval, Timeout, cb)
 end
 
 AnimateUI.FadeOutLeft = function(Message, Settings, Interval, Timeout, cb)
-    local PositionX = Config.PositionX
-    if Settings ~= nil then
-        if Settings.PositionX ~= nil then
-            PositionX = Settings.PositionX
-        end
-    end  
+    local PositionX = Override(Settings, "PositionX")
+    local Opacity   = Override(Settings, "Opacity")    
 
-    local Opacity = Config.Opacity
-    if Settings ~= nil then
-        if Settings.Opacity ~= nil then
-            Opacity = Settings.Opacity
-        end
-    end         
     return AnimateUI.Run(Message, Settings, {
         PositionX = {
             Start = PositionX,
@@ -345,19 +283,8 @@ end
 
 AnimateUI.FadeOutRight = function(Message, Settings, Interval, Timeout, cb)
 
-    local PositionX = Config.PositionX
-    if Settings ~= nil then
-        if Settings.PositionX ~= nil then
-            PositionX = Settings.PositionX
-        end
-    end  
-
-    local Opacity = Config.Opacity
-    if Settings ~= nil then
-        if Settings.Opacity ~= nil then
-            Opacity = Settings.Opacity
-        end
-    end      
+    local PositionX = Override(Settings, "PositionX")
+    local Opacity   = Override(Settings, "Opacity")    
 
     return AnimateUI.Run(Message, Settings, {
         PositionX = {
@@ -379,59 +306,39 @@ end
 
 -- SLIDE IN EFFECTS
 AnimateUI.SlideInDown = function(Message, Settings, Interval, Timeout, Exit, cb)
-    return AnimateUI.Run(Message, Settings, { PositionY = { Start = 0 } }, 'linear', Interval, Timeout, Exit, cb)
+    return AnimateUI.Run(Message, Settings, { PositionY = { Start = -0.1 } }, 'linear', Interval, Timeout, Exit, cb)
 end
 
 AnimateUI.SlideInUp = function(Message, Settings, Interval, Timeout, Exit, cb)
-    return AnimateUI.Run(Message, Settings, { PositionY = { Start = 1.0 } }, 'linear', Interval, Timeout, Exit, cb)
+    return AnimateUI.Run(Message, Settings, { PositionY = { Start = 1.1 } }, 'linear', Interval, Timeout, Exit, cb)
 end
 
 AnimateUI.SlideInLeft = function(Message, Settings, Interval, Timeout, Exit, cb)
-    return AnimateUI.Run(Message, Settings, { PositionX = { Start = 0 } }, 'linear', Interval, Timeout, Exit, cb)
+    return AnimateUI.Run(Message, Settings, { PositionX = { Start = -0.1 } }, 'linear', Interval, Timeout, Exit, cb)
 end
 
 AnimateUI.SlideInRight = function(Message, Settings, Interval, Timeout, Exit, cb)
-    return AnimateUI.Run(Message, Settings, { PositionX = { Start = 1.0 } }, 'linear', Interval, Timeout, Exit, cb)
+    return AnimateUI.Run(Message, Settings, { PositionX = { Start = 1.1 } }, 'linear', Interval, Timeout, Exit, cb)
 end
 
 -- SLIDE OUT EFFECTS
 AnimateUI.SlideOutDown = function(Message, Settings, Interval, Timeout, cb)
-    local PositionX = Config.PositionX
-    if Settings ~= nil then
-        if Settings.PositionX ~= nil then
-            PositionX = Settings.PositionX
-        end
-    end  
+    local PositionY = Override(Settings, "PositionY")
     return AnimateUI.Run(Message, Settings, { PositionY = { Start = PositionY, End = 1.1 } }, 'linear', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.SlideOutUp = function(Message, Settings, Interval, Timeout, cb)
-    local PositionY = Config.PositionY
-    if Settings ~= nil then
-        if Settings.PositionY ~= nil then
-            PositionY = Settings.PositionY
-        end
-    end        
+    local PositionY = Override(Settings, "PositionY")
     return AnimateUI.Run(Message, Settings, { PositionY = { Start = PositionY, End = -0.1 } }, 'linear', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.SlideOutLeft = function(Message, Settings, Interval, Timeout, cb)
-    local PositionX = Config.PositionX
-    if Settings ~= nil then
-        if Settings.PositionX ~= nil then
-            PositionX = Settings.PositionX
-        end
-    end        
+    local PositionX = Override(Settings, "PositionX")
     return AnimateUI.Run(Message, Settings, { PositionX = { Start = PositionX, End = -0.1 } }, 'linear', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.SlideOutRight = function(Message, Settings, Interval, Timeout, cb)
-    local PositionX = Config.PositionX
-    if Settings ~= nil then
-        if Settings.PositionX ~= nil then
-            PositionX = Settings.PositionX
-        end
-    end      
+    local PositionX = Override(Settings, "PositionX")
     return AnimateUI.Run(Message, Settings, { PositionX = { Start = PositionX, End = 1.1 } }, 'linear', Interval, Timeout, nil, cb)
 end
 
@@ -449,70 +356,45 @@ AnimateUI.BounceIn = function(Message, Settings, Interval, Timeout, Exit, cb)
 end
 
 AnimateUI.BounceInUp = function(Message, Settings, Interval, Timeout, Exit, cb)
-    return AnimateUI.Run(Message, Settings, { PositionY = { Start = 1.0 } }, 'inBounce', Interval, Timeout, Exit, cb)
+    return AnimateUI.Run(Message, Settings, { PositionY = { Start = 1.1 } }, 'inBounce', Interval, Timeout, Exit, cb)
 end
 
 AnimateUI.BounceInDown = function(Message, Settings, Interval, Timeout, Exit, cb)
-    return AnimateUI.Run(Message, Settings, { PositionY = { Start = 0 } }, 'inBounce', Interval, Timeout, Exit, cb)
+    return AnimateUI.Run(Message, Settings, { PositionY = { Start = -0.1 } }, 'inBounce', Interval, Timeout, Exit, cb)
 end
 
 AnimateUI.BounceInLeft = function(Message, Settings, Interval, Timeout, Exit, cb)
-    return AnimateUI.Run(Message, Settings, { PositionX = { Start = 0 } }, 'inBounce', Interval, Timeout, Exit, cb)
+    return AnimateUI.Run(Message, Settings, { PositionX = { Start = -0.1 } }, 'inBounce', Interval, Timeout, Exit, cb)
 end
 
 AnimateUI.BounceInRight = function(Message, Settings, Interval, Timeout, Exit, cb)
-    return AnimateUI.Run(Message, Settings, { PositionX = { Start = 1.0 } }, 'inBounce', Interval, Timeout, Exit, cb)
+    return AnimateUI.Run(Message, Settings, { PositionX = { Start = 1.1 } }, 'inBounce', Interval, Timeout, Exit, cb)
 end
 
 -- BOUNCE OUT
 AnimateUI.BounceOut = function(Message, Settings, Interval, Timeout, cb)
-    local Size = Config.Size
-    if Settings ~= nil then
-        if Settings.Size ~= nil then
-            Size = Settings.Size
-        end
-    end     
+    local Size = Override(Settings, "Size")  
     return AnimateUI.Run(Message, Settings, { Size = { Start = Size, End = 0 } }, 'outBounce', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.BounceOutUp = function(Message, Settings, Interval, Timeout, cb)
-    local Pos = Config.PositionY
-    if Settings ~= nil then
-        if Settings.PositionY ~= nil then
-            Pos = Settings.PositionY
-        end
-    end      
-    return AnimateUI.Run(Message, Settings, { PositionY = { Start = Pos, End = -0.1 } }, 'outBounce', Interval, Timeout, nil, cb)
+    local PositionY = Override(Settings, "PositionY") 
+    return AnimateUI.Run(Message, Settings, { PositionY = { Start = PositionY, End = -0.1 } }, 'outBounce', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.BounceOutDown = function(Message, Settings, Interval, Timeout, cb)
-    local Pos = Config.PositionY
-    if Settings ~= nil then
-        if Settings.PositionY ~= nil then
-            Pos = Settings.PositionY
-        end
-    end  
-    return AnimateUI.Run(Message, Settings, { PositionY = { Start = Pos, End = 1.1 } }, 'outBounce', Interval, Timeout, nil, cb)
+    local PositionY = Override(Settings, "PositionY")  
+    return AnimateUI.Run(Message, Settings, { PositionY = { Start = PositionY, End = 1.1 } }, 'outBounce', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.BounceOutLeft = function(Message, Settings, Interval, Timeout, cb)
-    local Pos = Config.PositionX
-    if Settings ~= nil then
-        if Settings.PositionX ~= nil then
-            Pos = Settings.PositionX
-        end
-    end  
-    return AnimateUI.Run(Message, Settings, { PositionX = { Start = Pos, End = -0.1 } }, 'outBounce', Interval, Timeout, nil, cb)
+    local PositionX = Override(Settings, "PositionX")   
+    return AnimateUI.Run(Message, Settings, { PositionX = { Start = PositionX, End = -0.1 } }, 'outBounce', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.BounceOutRight = function(Message, Settings, Interval, Timeout, cb)
-    local Pos = Config.PositionX
-    if Settings ~= nil then
-        if Settings.PositionX ~= nil then
-            Pos = Settings.PositionX
-        end
-    end      
-    return AnimateUI.Run(Message, Settings, { PositionX = { Start = Pos, End = 1.1 } }, 'outBounce', Interval, Timeout, nil, cb)
+    local PositionX = Override(Settings, "PositionX")    
+    return AnimateUI.Run(Message, Settings, { PositionX = { Start = PositionX, End = 1.1 } }, 'outBounce', Interval, Timeout, nil, cb)
 end
 
 
@@ -528,12 +410,7 @@ end
 
 -- ZOOM OUT
 AnimateUI.ZoomOut = function(Message, Settings, Interval, Timeout, cb)
-    local Size = Config.Size
-    if Settings ~= nil then
-        if Settings.Size ~= nil then
-            Size = Settings.Size
-        end
-    end
+    local Size = Override(Settings, "Size")  
     return AnimateUI.Run(Message, Settings, { Size = { Start = Size, End = 0 } }, 'linear', Interval, Timeout, nil, cb)
 end
 
@@ -567,53 +444,28 @@ end
 
 -- ELASTIC OUT
 AnimateUI.ElasticOut = function(Message, Settings, Interval, Timeout, cb)
-    local Size = Config.Size
-    if Settings ~= nil then
-        if Settings.Size ~= nil then
-            Size = Settings.Size
-        end
-    end    
+    local Size = Override(Settings, "Size")    
     return AnimateUI.Run(Message, Settings, {Size = { Start = Config.Size, End = 0 } }, 'outElastic', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.ElasticOutUp = function(Message, Settings, Interval, Timeout, cb)
-    local Pos = Config.PositionY
-    if Settings ~= nil then
-        if Settings.PositionY ~= nil then
-            Pos = Settings.PositionY
-        end
-    end    
-    return AnimateUI.Run(Message, Settings, { PositionY = { Start = Pos, End = -0.1 } }, 'outElastic', Interval, Timeout, nil, cb)
+    local PositionY = Override(Settings, "PositionY")  
+    return AnimateUI.Run(Message, Settings, { PositionY = { Start = PositionY, End = -0.1 } }, 'outElastic', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.ElasticOutDown = function(Message, Settings, Interval, Timeout, cb)
-    local Pos = Config.PositionY
-    if Settings ~= nil then
-        if Settings.PositionY ~= nil then
-            Pos = Settings.PositionY
-        end
-    end      
-    return AnimateUI.Run(Message, Settings, { PositionY = { Start = Pos, End = 1.1 } }, 'outElastic', Interval, Timeout, nil, cb)
+    local PositionY = Override(Settings, "PositionY")        
+    return AnimateUI.Run(Message, Settings, { PositionY = { Start = PositionY, End = 1.1 } }, 'outElastic', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.ElasticOutLeft = function(Message, Settings, Interval, Timeout, cb)
-    local Pos = Config.PositionX
-    if Settings ~= nil then
-        if Settings.PositionX ~= nil then
-            Pos = Settings.PositionX
-        end
-    end      
-    return AnimateUI.Run(Message, Settings, { PositionX = { Start = Pos, End = -0.1 } }, 'outElastic', Interval, Timeout, nil, cb)
+    local PositionX = Override(Settings, "PositionX")        
+    return AnimateUI.Run(Message, Settings, { PositionX = { Start = PositionX, End = -0.1 } }, 'outElastic', Interval, Timeout, nil, cb)
 end
 
 AnimateUI.ElasticOutRight = function(Message, Settings, Interval, Timeout, cb)
-    local Pos = Config.PositionX
-    if Settings ~= nil then
-        if Settings.PositionX ~= nil then
-            Pos = Settings.PositionX
-        end
-    end      
-    return AnimateUI.Run(Message, Settings, { PositionX = { Start = Pos, End = 1.1 } }, 'outElastic', Interval, Timeout, nil, cb)
+    local PositionX = Override(Settings, "PositionX")      
+    return AnimateUI.Run(Message, Settings, { PositionX = { Start = PositionX, End = 1.1 } }, 'outElastic', Interval, Timeout, nil, cb)
 end
 
 
@@ -636,7 +488,7 @@ AnimateUI.TypewriterIn = function(Message, Settings, Interval, Timeout, Exit, Ca
     }
 
     if Settings ~= nil then
-        Copy = GetSettings(Copy, Settings)
+        Copy = MergeConfig(Copy, Settings)
     end
 
     local Index = #Threads + 1
@@ -707,7 +559,7 @@ AnimateUI.TypewriterOut = function(Message, Settings, Interval, Timeout, cb)
     }
 
     if Settings ~= nil then
-        Copy = GetSettings(Copy, Settings)
+        Copy = MergeConfig(Copy, Settings)
     end
 
     local Index = #Threads + 1
