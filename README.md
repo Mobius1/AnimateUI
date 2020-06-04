@@ -80,23 +80,11 @@ Animated UI Messages for FiveM
 ## Usage
 The text can be shown by using the `exports.AnimateUI:showMessage` function.
 ```lua
-exports.AnimateUI:showMessage(Text, Settings, EntryEffect, Duration, Timeout, ExitEffect, Callback)
+exports.AnimateUI:showMessage(Text, EntryEffect, Duration, Timeout, Settings, ExitEffect, Callback)
 ```
 ### `Text` (Required)
 The `Text` param is the text you want to show to the player.
 
-### `Settings` (Required)
-The `Settings` is a table of settings to override the defaults in `config.lua`. Set to `nil` to use the defaults.
-
-Example:
-```lua
-exports.AnimateUI:showMessage(Text, {
-    Font      = 4,
-    Size      = 0.75,
-    Opacity   = 0.8,
-    PositionY = 0.35
-}, EntryEffect, Duration, Timeout, ExitEffect, Callback)
-```
 
 ### `EntryEffect` (Required)
 The `EntryEffect` param is the effect used to show the text to the player.
@@ -107,14 +95,27 @@ The `Duration` param determines how long the entry effect will be played.
 ### `Timeout` (Required)
 The `Timeout` param determines how long the text is displayed before being removed.
 
+### `Settings` (Required)
+The `Settings` is a table of settings to override the defaults in `config.lua`. Set to `nil` to use the defaults.
+
+Example:
+```lua
+exports.AnimateUI:showMessage(Text, EntryEffect, Duration, Timeout, {
+    Font      = 4,
+    Size      = 0.75,
+    Opacity   = 0.8,
+    PositionY = 0.35
+}, ExitEffect, Callback)
+```
+
 ### `ExitEffect` (Optional)
 The `ExitEffect` param can either be a string denoting the effect name to be used or a table. If the effect name is used then the duration of the exit effect will be the same as the entry duration (`Duration`). You can define the duration of the exit animation by using a table:
 ```lua
-exports.AnimateUI:showMessage("My Message", nil, "FadeIn", 1000, 3000, "FadeOut")
+exports.AnimateUI:showMessage("My Message", "FadeIn", 1000, 3000, nil, "FadeOut")
 
 -- or
 
-exports.AnimateUI:showMessage("My Message", nil, "FadeIn", 1000, 3000, 
+exports.AnimateUI:showMessage("My Message", "FadeIn", 1000, 3000, nil, 
 {
     Effect = 'FadeOut',   -- the exit effect to use
     Duration = 1000       -- the duration the exit effect
@@ -126,7 +127,7 @@ The `ExitEffect` param is optional and if left empty, the text will just disappe
 ### `Callback` (Optional)
 The `Callback` param is optional, but when used will fire when the text has been hidden:
 ```lua
-exports.AnimateUI:showMessage("My Message", nil, "FadeIn", 1000, 3000, "FadeOut", function()
+exports.AnimateUI:showMessage("My Message", "FadeIn", 1000, 3000, nil, "FadeOut", function()
     -- Do something when the text has been hidden
 end)
 ```
@@ -208,7 +209,7 @@ Entry effects can only be used to show the text and exit effects can only be use
 If you require the text to be removed at anytime, you can utilise the `exports.AnimateUI:removeMessage` function. To remove the message, you must store the ID beforehand:
 
 ```lua
-local ID = exports.AnimateUI:showMessage("My Message", nil, "FadeIn", 1000, 3000)
+local ID = exports.AnimateUI:showMessage("My Message", "FadeIn", 1000, 3000)
 
 exports.AnimateUI:removeMessage(ID)
 ```
